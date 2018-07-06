@@ -1,6 +1,5 @@
 import os
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'development_key')
@@ -8,7 +7,6 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'development_key')
 DEBUG = True
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(':')
-
 
 # Application definition
 
@@ -20,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'supervisor.apps.SupervisorConfig',
+    'django.contrib.postgres',
 ]
 
 MIDDLEWARE = [
@@ -53,14 +52,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'questor.wsgi.application'
 
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.getenv('POSTGRES_DB'),
+        'USER': os.getenv('POSTGRES_USER'),
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -77,7 +78,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -87,6 +87,5 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 STATIC_URL = '/static/'
