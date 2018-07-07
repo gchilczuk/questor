@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  questor:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    container_name: questor_app
+    ports:
+      - 80:80
+    command: /usr/bin/supervisord
+    volumes:
+      - ./questor:/app/questor/
+      - ./supervisor:/app/supervisor/
+      - ./static:/app/static/
+      - ./templates:/app/templates/
+    depends_on:
+      - database
+    environment:
+      - ALLOWED_HOSTS
+      - SECRET_KEY
+
+  database:
+    image: postgres
+    container_name: questor_db
+    ports:
+      - 5432:5432
+    restart: always
+    environment:
+      - POSTGRES_PASSWORD
+      - POSTGRES_USER
+      - POSTGRES_DB
