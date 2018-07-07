@@ -5,6 +5,13 @@ from django.contrib.postgres.fields import HStoreField
 from django.db import models
 from django.utils.timezone import now
 
+AnsResp = namedtuple('AnsResp', ['correct', 'feedback'])
+
+
+class Reward(models.Model):
+    """Representation of the reward of the game"""
+    description = models.TextField()
+
 
 class Edition(models.Model):
     """
@@ -20,6 +27,7 @@ class Edition(models.Model):
     name = models.CharField(max_length=16, blank=False)
     start = models.DateTimeField(default=now)
     finish = models.DateTimeField(null=True)
+    reward = models.ForeignKey(Reward, on_delete=models.SET_NULL, null=True)
 
 
 class Quest(models.Model):
@@ -33,17 +41,21 @@ class Quest(models.Model):
     :title: the title of the quest
     :description: detailed description of quest
     :question: final question of the quest
+    :answer:
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=32)
     description = models.TextField(blank=True)
     question = models.CharField(max_length=100)
-    answer = models.OneToOneField('Answer', models.SET_NULL)
+    answer = models.OneToOneField('Answer', models.SET_NULL, null=True)
+    succeeding = models.ForeignKey('Quest', on_delete=models.SET_NULL, related_name='previous', null=True)
     edition = models.ForeignKey(Edition, models.CASCADE, related_name='quests', related_query_name='quest')
 
-
-AnsResp = namedtuple('AnsResp', ['correct', 'feedback'])
+    @property
+    def preceding(self):
+        if self.previous.exists():
+            return self.previous.first()
 
 
 class Answer(models.Model):
@@ -72,6 +84,5 @@ class Answer(models.Model):
         """
         correct = answer == self.content
 
-        return AnsResp(
-            correct,
-            self.confirmation if correct else self.rejections.get(answer, self.default))
+        return AnsResp(correct,
+                       self.confirmation if correct else self.rejections.get(answer, self.default))
