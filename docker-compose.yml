@@ -7,8 +7,8 @@ services:
       context: .
     container_name: questor_app
     ports:
-      - 8000
-    command: python manage.py runserver 0.0.0.0:8000
+      - 80
+    command: /usr/bin/supervisord
     volumes:
       - ./questor:/app/questor/
       - ./supervisor:/app/supervisor/
