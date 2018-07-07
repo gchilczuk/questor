@@ -17,8 +17,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'supervisor.apps.SupervisorConfig',
     'django.contrib.postgres',
+    'supervisor.apps.SupervisorConfig',
 ]
 
 MIDDLEWARE = [
@@ -89,3 +89,4 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')

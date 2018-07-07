@@ -7,14 +7,15 @@ services:
       context: .
     container_name: questor_app
     ports:
-      - 80
+      - 80:80
     command: /usr/bin/supervisord
     volumes:
       - ./questor:/app/questor/
       - ./supervisor:/app/supervisor/
+      - ./static:/app/static/
+      - ./templates:/app/templates/
     depends_on:
       - database
-    network_mode: host
     environment:
       - ALLOWED_HOSTS
       - SECRET_KEY
