@@ -11,7 +11,7 @@ services:
     command: /usr/bin/supervisord
     volumes:
       - ./questor:/app/questor/
-      - ./supervisor:/app/supervisor/
+      - ./game:/app/game/
       - ./static:/app/static/
       - ./templates:/app/templates/
     depends_on:

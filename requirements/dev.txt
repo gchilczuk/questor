@@ -1,0 +1,5 @@
+pylama==7.4.3
+pytest==3.6.3
+pytest-django==3.3.2
+ipython==6.4.0
+coverage==4.5.1
