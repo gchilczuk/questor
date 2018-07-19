@@ -5,12 +5,12 @@ from game.models import Answer, Reward, Edition
 
 @pytest.fixture
 def sample_reward(db):
-    return Reward.objects.create(description='The cake is a lie.')
+    return Reward.objects.get_or_create(description='The cake is a lie.')[0]
 
 
 @pytest.fixture
 def sample_edition(sample_reward, db):
-    return Edition.objects.create(name='Sample Edition', reward=sample_reward)
+    return Edition.objects.get_or_create(name='Sample Edition', reward=sample_reward)[0]
 
 
 @pytest.fixture

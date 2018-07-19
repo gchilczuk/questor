@@ -35,22 +35,23 @@ class Quest(models.Model):
     Represents basic quest entity.
     Player must complete the task to get the next one.
     To confirm that quest is solved player have to
-    correctly answer the final question of the question.
+    correctly answer the final question of the quest
 
-    :id: uuid, primary key; universally unique identifier makes quests ordered non-sequentialy
+    :id: uuid, primary key; universally unique identifier
     :title: the title of the quest
     :description: detailed description of quest
     :question: final question of the quest
-    :answer:
+    :answer: correct answer of question
+    :succeeding: next quest in the game
     """
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(max_length=32)
     description = models.TextField(blank=True)
     question = models.CharField(max_length=100)
-    answer = models.OneToOneField('Answer', models.SET_NULL, null=True)
+    answer = models.OneToOneField('Answer', on_delete=models.SET_NULL, null=True)
     succeeding = models.ForeignKey('Quest', on_delete=models.SET_NULL, related_name='previous', null=True)
-    edition = models.ForeignKey(Edition, models.CASCADE, related_name='quests', related_query_name='quest')
+    edition = models.ForeignKey(Edition, on_delete=models.CASCADE, related_name='quests', related_query_name='quest')
 
     @property
     def preceding(self):
@@ -77,7 +78,7 @@ class Answer(models.Model):
 
     def evaluate(self, answer):
         """
-        Evaluate if answer provided by user is correct and return appropriate answer
+        Evaluate if answer provided by user is correct and return  proper response
 
         :param answer: answer provided by user
         :return: True if users' answer is correct, False otherwise
