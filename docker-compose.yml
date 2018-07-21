@@ -19,6 +19,7 @@ services:
     environment:
       - ALLOWED_HOSTS
       - SECRET_KEY
+      - DATABASE_URL
 
   database:
     image: postgres
