@@ -1,5 +1,7 @@
 import os
 
+import dj_database_url
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = os.getenv('SECRET_KEY', 'development_key')
@@ -52,14 +54,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'questor.wsgi.application'
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('POSTGRES_DB', 'devdb'),
-        'USER': os.getenv('POSTGRES_USER', 'devuser'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'devpass'),
-        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
-        'PORT': os.getenv('DB_PORT', '5432'),
-    }
+    'default': dj_database_url.config(conn_max_age=600)
 }
 
 AUTH_PASSWORD_VALIDATORS = [
