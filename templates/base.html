@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.1.2/slate/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-fSVTHAcdTrW2AQFxwcv4yRDyQdnteeIOLhHrrKIO4xTLK+JrplIISHbIHvfcYEKK" crossorigin="anonymous">
+
+    {% block link %}
+    {% endblock link %}
+
+    <title>{% block ptitle %} Questor {% endblock ptitle %}</title>
+
+</head>
+<body>
+<div id="body_container">
+
+    <header id="header" class="container mt-5">
+
+        {% block header %}
+        {% endblock header %}
+
+    </header>
+
+    <div id="main" class="container mt-5">
+
+        {% block main_content %}
+        {% endblock main_content %}
+
+    </div>
+
+</div>
+</body>
+</html>

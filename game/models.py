@@ -12,6 +12,9 @@ class Reward(models.Model):
     """Representation of the reward of the game"""
     description = models.TextField()
 
+    def __str__(self):
+        return self.description[:16]
+
 
 class Edition(models.Model):
     """
@@ -26,8 +29,11 @@ class Edition(models.Model):
 
     name = models.CharField(max_length=16, blank=False)
     start = models.DateTimeField(default=now)
-    finish = models.DateTimeField(null=True)
+    finish = models.DateTimeField(null=True, blank=True)
     reward = models.ForeignKey(Reward, on_delete=models.SET_NULL, null=True)
+
+    def __str__(self):
+        return self.name
 
 
 class Quest(models.Model):
@@ -50,13 +56,16 @@ class Quest(models.Model):
     description = models.TextField(blank=True)
     question = models.CharField(max_length=100)
     answer = models.OneToOneField('Answer', on_delete=models.SET_NULL, null=True)
-    succeeding = models.ForeignKey('Quest', on_delete=models.SET_NULL, related_name='previous', null=True)
+    succeeding = models.ForeignKey('Quest', on_delete=models.SET_NULL, related_name='previous', null=True, blank=True)
     edition = models.ForeignKey(Edition, on_delete=models.CASCADE, related_name='quests', related_query_name='quest')
 
     @property
     def preceding(self):
         if self.previous.exists():
             return self.previous.first()
+
+    def __str__(self):
+        return self.title
 
 
 class Answer(models.Model):
@@ -87,3 +96,6 @@ class Answer(models.Model):
 
         return AnsResp(correct,
                        self.confirmation if correct else self.rejections.get(answer, self.default))
+
+    def __str__(self):
+        return self.content

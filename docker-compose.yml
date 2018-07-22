@@ -12,7 +12,6 @@ services:
     volumes:
       - ./questor:/app/questor/
       - ./game:/app/game/
-      - ./static:/app/static/
       - ./templates:/app/templates/
     depends_on:
       - database

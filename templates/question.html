@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+    {{ quest.title }}
+    {% load static %}
+    <img src="{% static "a.jpg" %}" alt="My image"/>
+{% endblock main_content %}
