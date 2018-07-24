@@ -15,22 +15,21 @@
 
 </head>
 <body>
-<div id="body_container">
-
-    <header id="header" class="container mt-5">
-
-        {% block header %}
-        {% endblock header %}
-
-    </header>
-
-    <div id="main" class="container mt-5">
-
-        {% block main_content %}
-        {% endblock main_content %}
-
+<div id="body_container p-3">
+    <div class="m-5">
+        <div class="jumbotron">
+            <header >
+                <h1 class="text-center">
+                    {% block header %}
+                    {% endblock header %}
+                </h1>
+            </header>
+            <div class="m-5">
+                {% block main_content %}
+                {% endblock main_content %}
+            </div>
+        </div>
     </div>
-
 </div>
 </body>
 </html>

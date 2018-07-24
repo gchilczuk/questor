@@ -1,7 +1,31 @@
 {% extends "base.html" %}
 
-{% block main_content %}
+{% block header %}
     {{ quest.title }}
-    {% load static %}
-    <img src="{% static "a.jpg" %}" alt="My image"/>
+{% endblock header %}
+
+{% block main_content %}
+    <p class="text-lg-center m-4">
+        {{ quest.description }}
+    </p>
+
+    <form action="{% url 'quest' quest.id %}" method="POST"> {% csrf_token %}
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <label for="user_answer" class="text-center"> {{ quest.question }}</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="input-group mb-3">
+                        <input required name="user_answer" id="id_user_answer" type="text" class="form-control">
+                        <div class="input-group-append">
+                            <button class="btn btn-secondary btn-lg" type="submit">Sprawdź</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 {% endblock main_content %}

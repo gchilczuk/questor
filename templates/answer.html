@@ -1,1 +1,34 @@
 {% extends "base.html" %}
+
+{% block header %}
+    {{ quest.title }}
+{% endblock header %}
+
+{% block main_content %}
+    {% if result.correct %}
+        <div class="alert alert-success" role="alert">
+            <h4 class="alert-heading">Poprawna odpowiedź!</h4>
+            <p> {{ result.feedback }} </p>
+        </div>
+        <div>
+            {% if quest.succeeding %}
+                <a href="{% url 'quest' quest.succeeding.id %}">
+            {% else %}
+                <a href="{% url 'reward' quest.id %}">
+            {% endif %}
+            <button class="btn btn-success">Dalej</button>
+            </a>
+        </div>
+    {% else %}
+
+        <div class="alert alert-danger" role="alert">
+            <h4 class="alert-heading">Zła odpowiedź!</h4>
+            <p> {{ result.feedback }} </p>
+        </div>
+        <div>
+            <a href="{% url 'quest' quest.id %}">
+                <button class="btn btn-primary">Powrót</button>
+            </a>
+        </div>
+    {% endif %}
+{% endblock main_content %}
