@@ -10,13 +10,12 @@ from game.models import Quest
 class QuestView(View):
     http_method_names = ['get', 'post']
 
-    def get(self, request, id, *args, **kwargs):
+    def get(self, request, id):
         quest = get_object_or_404(Quest, id=id)
         return render(request, 'question.html', {'quest': quest})
 
-    def post(self, request, id, *args, **kwargs):
+    def post(self, request, id):
         quest = get_object_or_404(Quest, id=id)
-        print(request.content_type, '\n……………………………………………………………\n', request.POST, id, args, kwargs)
         qf = QuestForm(request.POST)
 
         if qf.is_valid():
@@ -25,7 +24,7 @@ class QuestView(View):
             return render(request, 'answer.html', {'quest': quest, 'result': result})
 
         else:
-            return HttpResponseBadRequest(f'{qf}, {request.POST}, {request}, {args}, {kwargs}')
+            return HttpResponseBadRequest('You broke it - you won it!')
 
 
 @require_GET

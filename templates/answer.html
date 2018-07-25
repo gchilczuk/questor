@@ -10,14 +10,18 @@
             <h4 class="alert-heading">Poprawna odpowiedź!</h4>
             <p> {{ result.feedback }} </p>
         </div>
-        <div>
-            {% if quest.succeeding %}
-                <a href="{% url 'quest' quest.succeeding.id %}">
-            {% else %}
-                <a href="{% url 'reward' quest.id %}">
-            {% endif %}
-            <button class="btn btn-success">Dalej</button>
-            </a>
+        <div class="container">
+            <div class="col"></div>
+            <div class="col">
+                {% if quest.succeeding %}
+                    <a href="{% url 'quest' quest.succeeding.id %}">
+                {% else %}
+                    <a href="{% url 'reward' quest.id %}">
+                {% endif %}
+                <button class="btn btn-lg btn-outline-success">Dalej</button>
+                </a>
+            </div>
+            <div class="col"></div>
         </div>
     {% else %}
 
@@ -25,10 +29,15 @@
             <h4 class="alert-heading">Zła odpowiedź!</h4>
             <p> {{ result.feedback }} </p>
         </div>
-        <div>
-            <a href="{% url 'quest' quest.id %}">
-                <button class="btn btn-primary">Powrót</button>
-            </a>
+        <div class="container">
+            <div class="col"></div>
+            <div class="col">
+
+                <a href="{% url 'quest' quest.id %}">
+                    <button class="btn btn-lg btn-outline-secondary">Powrót</button>
+                </a>
+            </div>
+            <div class="col"></div>
         </div>
     {% endif %}
 {% endblock main_content %}
